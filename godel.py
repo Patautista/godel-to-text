@@ -40,3 +40,34 @@ def decode_godel_number(number):
         else: break
     
     return lst
+
+def gerar_linha_de_codigo(a, b, c):
+    # Primeiro, vamos tratar a parte do rótulo
+    rotulo = ""
+    if a > 0:
+        letras = "ABCDE"
+        numero_rotulo = (a - 1) // 5 + 1
+        if(numero_rotulo == 1):
+           numero_rotulo = "" 
+        letra_rotulo = letras[(a - 1) % 5]
+        rotulo = f"[{letra_rotulo}{numero_rotulo}]"
+
+    # Agora, vamos tratar a parte da variável
+    variaveis = ["Y", "X1", "Z1", "X2", "Z2", "X3", "Z3"]  # Lista de variáveis
+    variavel = variaveis[c]
+
+    # Em seguida, tratamos o tipo de declaração
+    if b == 0:
+        tipo = f"{variavel} ← {variavel}"
+    elif b == 1:
+        tipo = f"{variavel} ← {variavel} + 1"
+    elif b == 2:
+        tipo = f"{variavel} ← {variavel} - 1"
+    else:
+        numero_rotulo = b - 2
+        tipo = f"IF {variavel} != 0 GOTO [{letra_rotulo}{numero_rotulo}]"
+
+    # Combinamos todas as partes em uma linha de código
+    linha_de_codigo = f"{rotulo} {tipo}"
+
+    return linha_de_codigo
